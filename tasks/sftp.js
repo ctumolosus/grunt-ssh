@@ -15,7 +15,6 @@ module.exports = function (grunt) {
     grunt.registerMultiTask('sftp', 'Copy files to a (remote) machine running an SSH daemon.', function () {
 
         var utillib = require('./lib/util').init(grunt);
-        var fs = require('fs');
         var async = require('async');
         var Connection = require('ssh2');
         var path = require('path');
@@ -95,7 +94,6 @@ module.exports = function (grunt) {
                     // the directories we are copying into will exist, otherwise
                     // the async thingie causes problems
                     var fileQueue = [];
-                    var functionQueue = [];
                     var paths = [];
 
                     srcFiles.forEach(function (srcFile) {
