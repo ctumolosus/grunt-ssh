@@ -32,6 +32,17 @@ module.exports = function (grunt) {
             directoryPermissions: parseInt(755, 8)
         });
 
+        var symbols = {
+          ok: '✓',
+          err: '✖'
+        };
+
+        // With node.js on Windows: use symbols available in terminal default fonts
+        if ('win32' == process.platform) {
+          symbols.ok = '\u221A';
+          symbols.err = '\u00D7';
+        }
+
         grunt.verbose.writeflags(options, 'Raw Options');
 
         function setOption (optionName) {
@@ -154,13 +165,13 @@ module.exports = function (grunt) {
                                 if (err) {
                                     // show red dot when `file` failed to upload
                                     // and not in verbose mode.
-                                    grunt.verbose.or.write('.'.red.bold);
+                                    grunt.verbose.or.write('  ' + symbols.err.red.bold + ' ' + file.src);
                                     return callback(err);
                                 }
 
                                 // show green dot when `file` is uploaded
                                 // succesfully and not in verbose mode.
-                                grunt.verbose.writeln('copied ' + file.src + ' to ' + file.dest).or.write('.'.green);
+                                grunt.verbose.writeln('copied ' + file.src + ' to ' + file.dest).or.writeln('  ' + symbols.ok.green.bold + ' ' + file.src.grey.bold);
                                 callback();
                             });
 
